@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>RollerAudit v4.3 | Master Edition</title>
+    <style>
+        :root { --accent: #e94560; --bg: #1a1a2e; --panel: #16213e; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .card { background: var(--panel); padding: 3rem; border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); text-align: center; border: 1px solid rgba(255,255,255,0.05); max-width: 450px; }
+        h1 { font-size: 2.2rem; margin-bottom: 10px; color: var(--accent); text-transform: uppercase; }
+        p { color: #8b9bb4; line-height: 1.6; margin-bottom: 30px; font-size: 0.95rem; }
+        .btn { display: inline-block; background: var(--accent); color: #fff; padding: 20px 50px; border-radius: 100px; text-decoration: none; font-weight: 700; font-size: 1.2rem; cursor: move; border: 2px dashed rgba(255,255,255,0.4); transition: 0.3s; }
+        .btn:hover { transform: translateY(-5px); background: #ff4d6d; box-shadow: 0 10px 20px rgba(233, 69, 96, 0.4); }
+        .footer { margin-top: 25px; font-size: 0.75rem; color: #536179; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>RollerAudit v4.3</h1>
+        <p>Авто-клик по координатам 7.5%/50% и умное сохранение файла с ником игрока.</p>
+        
+        <a class="btn" href="javascript:(function(){window.allMyRacks=[];let lastSlot='';let counter=1;const delay=1300;function scan(){const el=document.querySelector('.cell-number');const loc=el?el.innerText:'Unknown';if(loc===lastSlot){setTimeout(scan,200);return}const next=document.querySelector('button.right-arrow');document.querySelectorAll('.dnd-container .rack-shelf').forEach((sh,sIdx)=>{sh.querySelectorAll('.miner-wrapper').forEach(m=>{window.allMyRacks.push({id:counter++,loc:loc,rack:document.querySelector('.rack-details span')?.innerText||'Rack',sh:sIdx+1,name:m.querySelector('.miner-name')?.innerText||'Empty',p:m.querySelector('.miner-power-bonus span:first-child')?.innerText||'0',u:m.querySelector('.miner-power-bonus span:nth-child(2)')?.innerText||'',b:m.querySelector('.miner-bonus')?.innerText||'0%'})})});lastSlot=loc;if(!next||next.disabled||next.classList.contains('disabled')){const nameEl=document.querySelector('.text.name');const pName=(nameEl?nameEl.innerText:'report').trim().replace(/[^a-z0-9]/gi,'_');const sep=';';const h=['#','Slot','Rack','Shelf','Miner','Power','Unit','Bonus'];const csv=[h.join(sep),...window.allMyRacks.map(r=>[r.id,r.loc,r.rack,r.sh,r.name,r.p,r.u,r.b].join(sep))].join('\n');const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`audit_${pName}.csv`;a.click();return}next.click();setTimeout(scan,delay)}function init(){const cv=document.querySelector('#phaserMainScreen canvas')||document.querySelector('canvas');if(!cv)return;const r=cv.getBoundingClientRect();const x=r.left+r.width*0.075;const y=r.top+r.height*0.5;const o={clientX:x,clientY:y,bubbles:true,view:window};cv.dispatchEvent(new MouseEvent('mousedown',o));cv.dispatchEvent(new MouseEvent('mouseup',o));cv.dispatchEvent(new MouseEvent('click',o));setTimeout(()=>{if(document.querySelector('.cell-number')){scan()}else{alert('Не удалось открыть стеллаж. Кликните по нему вручную!')}},1500)}init()})();">
+            🚀 СТАРТ СКАНЕРА
+        </a>
+
+        <div class="footer">
+            Инструмент адаптирован под Phaser Canvas.
+        </div>
+    </div>
+</body>
+</html>
