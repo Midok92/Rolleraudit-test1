@@ -3,34 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RollerAudit v5.1 | Stable</title>
+    <title>RollerAudit v5.1</title>
     <style>
         :root { --accent: #e94560; --bg: #1a1a2e; --panel: #16213e; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .card { background: var(--panel); padding: 2.5rem; border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); text-align: center; border: 1px solid rgba(255,255,255,0.05); max-width: 420px; width: 90%; }
-        h1 { font-size: 1.8rem; color: var(--accent); text-transform: uppercase; margin-bottom: 10px; letter-spacing: 1px; }
-        p { color: #8b9bb4; font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px; }
+        .card { background: var(--panel); padding: 2.5rem; border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); text-align: center; border: 1px solid rgba(255,255,255,0.05); max-width: 400px; width: 90%; }
+        h1 { font-size: 1.8rem; color: var(--accent); margin-bottom: 10px; }
+        p { color: #8b9bb4; font-size: 0.95rem; margin-bottom: 25px; }
         .btn { display: inline-block; background: var(--accent); color: #fff; padding: 18px 45px; border-radius: 100px; text-decoration: none; font-weight: 700; border: 2px dashed rgba(255,255,255,0.4); transition: 0.3s; cursor: move; }
-        .btn:hover { transform: translateY(-3px); background: #ff4d6d; box-shadow: 0 10px 20px rgba(233, 69, 96, 0.4); }
-        .info-panel { margin-top: 25px; text-align: left; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 12px; font-size: 0.85rem; color: #ced4da; }
-        .badge { display: inline-block; background: #0f3460; padding: 4px 10px; border-radius: 4px; font-size: 0.7rem; margin-bottom: 10px; color: #4ecca3; font-weight: bold; }
+        .btn:hover { transform: translateY(-3px); background: #ff4d6d; }
+        .info { margin-top: 25px; font-size: 0.85rem; color: #ced4da; line-height: 1.4; }
     </style>
 </head>
 <body>
     <div class="card">
-        <div class="badge">STABLE RELEASE</div>
         <h1>RollerAudit v5.1</h1>
-        <p>Universal Auditor for RollerCoin.<br>Optimized for <b>iPhone 7</b>, Android & Desktop.</p>
+        <p>Inventory auditor for RollerCoin</p>
         
-        <a class="btn" href="javascript:(function(){if(window.isRollerAuditRunning){alert('⚠️ Scanner is already running! Please wait for completion.');return}window.isRollerAuditRunning=true;window.allMyRacks=[];let lastSlot='';let counter=1;const delay=1500;function scan(){const el=document.querySelector('.cell-number');const next=document.querySelector('button.right-arrow');if(!el||!next){setTimeout(scan,500);return}const loc=el.innerText;if(loc===lastSlot){setTimeout(scan,500);return}document.querySelectorAll('.dnd-container .rack-shelf').forEach((sh,sIdx)=>{sh.querySelectorAll('.miner-wrapper').forEach(m=>{window.allMyRacks.push({id:counter++,loc:loc,rack:document.querySelector('.rack-details span')?.innerText||'Rack',sh:sIdx+1,name:m.querySelector('.miner-name')?.innerText||'Empty',p:m.querySelector('.miner-power-bonus span:first-child')?.innerText||'0',u:m.querySelector('.miner-power-bonus span:nth-child(2)')?.innerText||'',b:m.querySelector('.miner-bonus')?.innerText||'0%'})})});lastSlot=loc;if(next.disabled||next.classList.contains('disabled')){const nameEl=document.querySelector('.text.name');const pName=(nameEl?nameEl.innerText:'report').trim().replace(/[^a-z0-9]/gi,'_');const sep=';';const h=['#','Slot','Rack','Shelf','Miner','Power','Unit','Bonus'];const csv=[h.join(sep),...window.allMyRacks.map(r=>[r.id,r.loc,r.rack,r.sh,r.name,r.p,r.u,r.b].join(sep))].join('\n');const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`audit_${pName}.csv`;a.click();window.isRollerAuditRunning=false;return}next.click();setTimeout(scan,delay)}function init(){const cv=document.querySelector('#phaserMainScreen canvas')||document.querySelector('canvas');if(!cv){window.isRollerAuditRunning=false;return}const r=cv.getBoundingClientRect();const xSteps=[0.08,0.18,0.28];const ySteps=[0.25,0.35,0.45,0.55];let points=[];for(let xP of xSteps){for(let yP of ySteps){points.push({x:r.left+r.width*xP,y:r.top+r.height*yP})}}let i=0;function tryNext(){if(i>=points.length){alert('Rack not found! Please open any rack manually.');window.isRollerAuditRunning=false;return}const p=points[i];const o={clientX:p.x,clientY:p.y,bubbles:true,view:window};cv.dispatchEvent(new MouseEvent('mousedown',o));cv.dispatchEvent(new MouseEvent('mouseup',o));cv.dispatchEvent(new MouseEvent('click',o));setTimeout(()=>{if(document.querySelector('.cell-number')){scan()}else{i++;tryNext()}},250)}tryNext()}init()})();">
+        <a class="btn" href="javascript:(function(){if(window.isRollerAuditRunning){alert('Scanner is already running!');return}window.isRollerAuditRunning=true;window.allMyRacks=[];let lastSlot='';let counter=1;const delay=1500;function scan(){const el=document.querySelector('.cell-number');const next=document.querySelector('button.right-arrow');if(!el||!next){setTimeout(scan,500);return}const loc=el.innerText;if(loc===lastSlot){setTimeout(scan,500);return}document.querySelectorAll('.dnd-container .rack-shelf').forEach((sh,sIdx)=>{sh.querySelectorAll('.miner-wrapper').forEach(m=>{window.allMyRacks.push({id:counter++,loc:loc,rack:document.querySelector('.rack-details span')?.innerText||'Rack',sh:sIdx+1,name:m.querySelector('.miner-name')?.innerText||'Empty',p:m.querySelector('.miner-power-bonus span:first-child')?.innerText||'0',u:m.querySelector('.miner-power-bonus span:nth-child(2)')?.innerText||'',b:m.querySelector('.miner-bonus')?.innerText||'0%'})})});lastSlot=loc;if(next.disabled||next.classList.contains('disabled')){const nameEl=document.querySelector('.text.name');const pName=(nameEl?nameEl.innerText:'report').trim().replace(/[^a-z0-9]/gi,'_');const sep=';';const h=['#','Slot','Rack','Shelf','Miner','Power','Unit','Bonus'];const csv=[h.join(sep),...window.allMyRacks.map(r=>[r.id,r.loc,r.rack,r.sh,r.name,r.p,r.u,r.b].join(sep))].join('\n');const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`audit_${pName}.csv`;a.click();window.isRollerAuditRunning=false;return}next.click();setTimeout(scan,delay)}function init(){const cv=document.querySelector('#phaserMainScreen canvas')||document.querySelector('canvas');if(!cv){window.isRollerAuditRunning=false;return}const r=cv.getBoundingClientRect();const xSteps=[0.08,0.18,0.28];const ySteps=[0.25,0.35,0.45,0.55];let points=[];for(let xP of xSteps){for(let yP of ySteps){points.push({x:r.left+r.width*xP,y:r.top+r.height*yP})}}let i=0;function tryNext(){if(i>=points.length){alert('Rack not found! Please open any rack manually.');window.isRollerAuditRunning=false;return}const p=points[i];const o={clientX:p.x,clientY:p.y,bubbles:true,view:window};cv.dispatchEvent(new MouseEvent('mousedown',o));cv.dispatchEvent(new MouseEvent('mouseup',o));cv.dispatchEvent(new MouseEvent('click',o));setTimeout(()=>{if(document.querySelector('.cell-number')){scan()}else{i++;tryNext()}},250)}tryNext()}init()})();">
             🚀 START AUDIT
         </a>
 
-        <div class="info-panel">
-            <b>Community Edition:</b><br>
-            • Anti-Lag & Grid Scanning Technology.<br>
-            • Supports Portrait & Landscape mode.<br>
-            • Protection against double-launch.
+        <div class="info">
+            Drag the button to your Bookmarks bar.<br>
+            Then click it while in the game room.
         </div>
     </div>
 </body>
