@@ -3,75 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RollerAudit v4.3 | Smart Edition</title>
+    <title>RollerAudit v5.0 | Grid Scanner</title>
     <style>
         :root { --accent: #e94560; --bg: #1a1a2e; --panel: #16213e; }
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: var(--bg); 
-            color: #fff; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh; 
-            margin: 0; 
-        }
-        .card { 
-            background: var(--panel); 
-            padding: 3rem; 
-            border-radius: 24px; 
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5); 
-            text-align: center; 
-            border: 1px solid rgba(255,255,255,0.05); 
-            max-width: 450px; 
-        }
-        h1 { font-size: 2.2rem; margin-bottom: 10px; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; }
-        p { color: #8b9bb4; line-height: 1.6; margin-bottom: 30px; font-size: 0.95rem; }
-        .btn { 
-            display: inline-block; 
-            background: var(--accent); 
-            color: #fff; 
-            padding: 20px 50px; 
-            border-radius: 100px; 
-            text-decoration: none; 
-            font-weight: 700; 
-            font-size: 1.2rem; 
-            cursor: move; 
-            border: 2px dashed rgba(255,255,255,0.4); 
-            transition: 0.3s; 
-        }
-        .btn:hover { 
-            transform: translateY(-5px); 
-            background: #ff4d6d; 
-            box-shadow: 0 10px 20px rgba(233, 69, 96, 0.4); 
-        }
-        .instruction {
-            margin-top: 20px;
-            font-size: 0.85rem;
-            color: #536179;
-            background: rgba(0,0,0,0.2);
-            padding: 10px;
-            border-radius: 10px;
-        }
-        .footer { margin-top: 25px; font-size: 0.75rem; color: #536179; opacity: 0.6; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .card { background: var(--panel); padding: 2.5rem; border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); text-align: center; border: 1px solid rgba(255,255,255,0.05); max-width: 400px; }
+        h1 { font-size: 2rem; color: var(--accent); text-transform: uppercase; margin-bottom: 10px; }
+        p { color: #8b9bb4; font-size: 0.9rem; line-height: 1.5; margin-bottom: 25px; }
+        .btn { display: inline-block; background: var(--accent); color: #fff; padding: 18px 45px; border-radius: 100px; text-decoration: none; font-weight: 700; border: 2px dashed rgba(255,255,255,0.4); transition: 0.3s; cursor: move; }
+        .btn:hover { transform: translateY(-3px); background: #ff4d6d; box-shadow: 0 10px 20px rgba(233, 69, 96, 0.3); }
+        .status-box { margin-top: 20px; font-size: 0.8rem; color: #536179; background: rgba(0,0,0,0.2); padding: 10px; border-radius: 10px; }
     </style>
 </head>
 <body>
     <div class="card">
-        <h1>RollerAudit v4.3</h1>
-        <p>Advanced inventory scanner for RollerCoin.<br>Now with <b>Anti-Lag Logic</b> and Auto-CSV export.</p>
+        <h1>RollerAudit v5.0</h1>
+        <p>Universal Grid-Scanning Technology.<br>Works on <b>iPhone 7, Android & PC</b>.</p>
         
-        <a class="btn" href="javascript:(function(){window.allMyRacks=[];let lastSlot='';let counter=1;const delay=1300;function scan(){const el=document.querySelector('.cell-number');const next=document.querySelector('button.right-arrow');if(!el||!next){setTimeout(scan,500);return}const loc=el.innerText;if(loc===lastSlot){setTimeout(scan,500);return}document.querySelectorAll('.dnd-container .rack-shelf').forEach((sh,sIdx)=>{sh.querySelectorAll('.miner-wrapper').forEach(m=>{window.allMyRacks.push({id:counter++,loc:loc,rack:document.querySelector('.rack-details span')?.innerText||'Rack',sh:sIdx+1,name:m.querySelector('.miner-name')?.innerText||'Empty',p:m.querySelector('.miner-power-bonus span:first-child')?.innerText||'0',u:m.querySelector('.miner-power-bonus span:nth-child(2)')?.innerText||'',b:m.querySelector('.miner-bonus')?.innerText||'0%'})})});lastSlot=loc;if(next.disabled||next.classList.contains('disabled')){const nameEl=document.querySelector('.text.name');const pName=(nameEl?nameEl.innerText:'report').trim().replace(/[^a-z0-9]/gi,'_');const sep=';';const h=['#','Slot','Rack','Shelf','Miner','Power','Unit','Bonus'];const csv=[h.join(sep),...window.allMyRacks.map(r=>[r.id,r.loc,r.rack,r.sh,r.name,r.p,r.u,r.b].join(sep))].join('\n');const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`audit_${pName}.csv`;a.click();return}next.click();setTimeout(scan,delay)}function init(){const cv=document.querySelector('#phaserMainScreen canvas')||document.querySelector('canvas');if(!cv)return;const r=cv.getBoundingClientRect();const x=r.left+r.width*0.075;const y=r.top+r.height*0.5;const o={clientX:x,clientY:y,bubbles:true,view:window};cv.dispatchEvent(new MouseEvent('mousedown',o));cv.dispatchEvent(new MouseEvent('mouseup',o));cv.dispatchEvent(new MouseEvent('click',o));setTimeout(()=>{if(document.querySelector('.cell-number')){scan()}else{alert('Failed to open. Click the rack manually!')}},1500)}init()})();">
-            🚀 START SCANNER
+        <a class="btn" href="javascript:(function(){window.allMyRacks=[];let lastSlot='';let counter=1;const delay=1500;function scan(){const el=document.querySelector('.cell-number');const next=document.querySelector('button.right-arrow');if(!el||!next){setTimeout(scan,500);return}const loc=el.innerText;if(loc===lastSlot){setTimeout(scan,500);return}document.querySelectorAll('.dnd-container .rack-shelf').forEach((sh,sIdx)=>{sh.querySelectorAll('.miner-wrapper').forEach(m=>{window.allMyRacks.push({id:counter++,loc:loc,rack:document.querySelector('.rack-details span')?.innerText||'Rack',sh:sIdx+1,name:m.querySelector('.miner-name')?.innerText||'Empty',p:m.querySelector('.miner-power-bonus span:first-child')?.innerText||'0',u:m.querySelector('.miner-power-bonus span:nth-child(2)')?.innerText||'',b:m.querySelector('.miner-bonus')?.innerText||'0%'})})});lastSlot=loc;if(next.disabled||next.classList.contains('disabled')){const nameEl=document.querySelector('.text.name');const pName=(nameEl?nameEl.innerText:'report').trim().replace(/[^a-z0-9]/gi,'_');const sep=';';const h=['#','Slot','Rack','Shelf','Miner','Power','Unit','Bonus'];const csv=[h.join(sep),...window.allMyRacks.map(r=>[r.id,r.loc,r.rack,r.sh,r.name,r.p,r.u,r.b].join(sep))].join('\n');const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`audit_${pName}.csv`;a.click();return}next.click();setTimeout(scan,delay)}function init(){const cv=document.querySelector('#phaserMainScreen canvas')||document.querySelector('canvas');if(!cv)return;const r=cv.getBoundingClientRect();const xSteps=[0.08,0.18,0.28];const ySteps=[0.25,0.35,0.45,0.55];let points=[];for(let xP of xSteps){for(let yP of ySteps){points.push({x:r.left+r.width*xP,y:r.top+r.height*yP})}}let i=0;function tryNext(){if(i>=points.length){alert('Rack not found! Try manual start.');return}const p=points[i];cv.dispatchEvent(new MouseEvent('mousedown',{clientX:p.x,clientY:p.y,bubbles:true,view:window}));cv.dispatchEvent(new MouseEvent('mouseup',{clientX:p.x,clientY:p.y,bubbles:true,view:window}));cv.dispatchEvent(new MouseEvent('click',{clientX:p.x,clientY:p.y,bubbles:true,view:window}));setTimeout(()=>{if(document.querySelector('.cell-number')){scan()}else{i++;tryNext()}},250)}tryNext()}init()})();">
+            🚀 START AUDIT
         </a>
 
-        <div class="instruction">
-            Drag this button to your Bookmarks Bar
-        </div>
-
-        <div class="footer">
-            Optimized for RollerCoin Phaser Engine.<br>
-            Anti-Lag System: Active.
+        <div class="status-box">
+            <b>How it works:</b><br>
+            It will tap several points to find the first rack automatically. Just wait a second!
         </div>
     </div>
 </body>
